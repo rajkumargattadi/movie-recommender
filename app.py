@@ -3,6 +3,10 @@ import streamlit as st
 import pickle
 import requests
 
+def download_pickle(url):
+    response = requests.get(url)
+    return pickle.loads(response.content)
+
 
 
 def fetch_poster(movie_title):
@@ -40,17 +44,11 @@ def recommend(movie):
     return recommended_movies,recommended_movies_posters
 
 
-
-def download_pickle(url):
-    response = requests.get(url)
-    return pickle.loads(response.content)
-
-movie_dict = download_pickle("https://drive.google.com/uc?id=148IbJ4C1NR6zGKKIoD2k1GJ_ixm9HgdV")
-
+movie_dict = download_pickle("https://drive.google.com/uc?id=1WLJ6IfB-Y4GpgRX9J0rzs0aIWuTLu1jC")
 movies=pd.DataFrame(movie_dict)
 
 
-similarity=pickle.load(open('similarity.pkl','rb'))
+similarity = download_pickle("https://drive.google.com/uc?id=148IbJ4C1NR6zGKKIoD2k1GJ_ixm9HgdV")
 
 
 st.title('Movie Recommender System')
