@@ -5,7 +5,6 @@ import requests
 
 
 
-
 def fetch_poster(movie_title):
     api_key='3fb6a8a8&y'
     url = f"http://www.omdbapi.com/?t={movie_title}&apikey={api_key}"
@@ -41,8 +40,14 @@ def recommend(movie):
     return recommended_movies,recommended_movies_posters
 
 
-movies_dict=pickle.load(open('movie_dict.pkl','rb'))
-movies=pd.DataFrame(movies_dict)
+
+def download_pickle(url):
+    response = requests.get(url)
+    return pickle.loads(response.content)
+
+movie_dict = download_pickle("https://drive.google.com/uc?id=148IbJ4C1NR6zGKKIoD2k1GJ_ixm9HgdV")
+
+movies=pd.DataFrame(movie_dict)
 
 
 similarity=pickle.load(open('similarity.pkl','rb'))
